@@ -10,11 +10,14 @@ st.set_page_config(
 df = pd.read_csv("names.csv", encoding="utf-8")
 
 st.title("Vārdu Kērlings") 
-st.subheader("Dati uz 2024.07.01") 
+st.subheader("Ballīšu Spēle par to, Cik labi Tu un Tavi draugi zina Latviešus") 
 
 # Instructions
 st.write("""
-**Instrukcijas:**
+**
+Uzvar spēlētājs, kura izvēlētā vārda popularitāte ir vistuvāk sākotnējā vārda izplatībai Latvijā.         
+
+Instrukcijas:**
 
 1. **Ievadiet sākotnējo vārdu.** Šis vārds kalpos kā atskaites punkts.
 2. **Izvēlieties spēlētāju skaitu.**
@@ -22,7 +25,7 @@ st.write("""
 4. **Katrs spēlētājs ievada savu vārdu.**
 5. **Nospiediet "Iesniegt", lai redzētu rezultātus.**
 
-Uzvar spēlētājs, kura izvēlētā vārda popularitāte ir vistuvāk sākotnējā vārda izplatībai Latvijā.
+
 """)
 
 
@@ -101,7 +104,8 @@ def display_results(initial_name, player_names, player_scores, winner_index):
     # Display the winner or "No winner" message
     if all_disqualified:
         st.write("Nav uzvarētāja - visi vārdi tika diskvalificēti!")  
-        winner_name = player_names[winner_index]
+    else:
+        winner_name = player_names[winner_index]  # Corrected line position
         st.write(f"Uzvarētājs: {winner_name}") 
 
 # --- Game logic ---
@@ -127,6 +131,5 @@ if st.session_state.game_started:
         # Display the results
         display_results(initial_name, player_names, player_scores, winner_index)
 
-
 # Display the data source
-st.write("Dati no PMLP, iegūti izmantojot Atvērto datu portālu.") 
+st.write("Dati no PMLP, iegūti izmantojot Atvērto datu portālu. Dati uz 2024. gada 7. jūliju")

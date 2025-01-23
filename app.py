@@ -22,7 +22,7 @@ st.write("""
 4. **Katrs spēlētājs ievada savu vārdu.**
 5. **Nospiediet "Iesniegt", lai redzētu rezultātus.**
 
-Uzvar spēlētājs, kura izvēlētā vārda popularitāte ir vistuvāk sākotnējā vārda popularitātei.
+Uzvar spēlētājs, kura izvēlētā vārda popularitāte ir vistuvāk sākotnējā vārda izplatībai Latvijā.
 """)
 
 

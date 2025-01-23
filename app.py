@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-
 st.set_page_config(
     page_title="Vārdu Kērlings",  # Set the page title here
     page_icon=":crown:",  # You can also set an icon
@@ -107,6 +106,7 @@ def display_results(initial_name, player_names, player_scores, winner_index):
             st.write(f"Spēlētājs {i+1}: {player_name} - Diskvalificēts (vārds nav atrasts)") 
         else:
             all_disqualified = False  # At least one player is not disqualified
+            # Display the results using player_popularity
             st.write(f"Spēlētājs {i+1}: {player_name}, Popularitāte: {player_popularity}, Starpība: {net_difference}")  
 
     # Display the winner or "No winner" message
@@ -131,10 +131,8 @@ def display_results(initial_name, player_names, player_scores, winner_index):
         # Display the player's name and the summed "Skaits"
         st.write(f"**Spēlētājs {i+1}: {player_name} - Kopā: {total_skaits}**") 
         
-        # Display the rows that were counted for each player (without the index)
-        st.write(player_rows[["Vardi", "Skaits"]].to_markdown(index=False, numalign="left", stralign="left"))  # Hide the index
-
-
+        # Display the rows that were counted for each player
+        st.write(player_rows[["Vardi", "Skaits"]])  # Display only "Vardi" and "Skaits" columns
 
 # --- Game logic ---
 

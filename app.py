@@ -134,6 +134,8 @@ def display_results(initial_name, player_names, player_scores, winner_index):
         # Display the rows that were counted for each player (without the index)
         st.write(player_rows[["Vardi", "Skaits"]].to_markdown(index=False, numalign="left", stralign="left"))  # Hide the index
 
+
+
 # --- Game logic ---
 
 if "game_started" not in st.session_state:

@@ -116,23 +116,24 @@ def display_results(initial_name, player_names, player_scores, winner_index):
         winner_name = player_names[winner_index]  # Corrected line position
         st.write(f"Uzvarētājs: {winner_name}") 
 
-    # Display the summed "Skaits" for each player
-    st.write("**Vārdi, kas tika ieskaitīti:**")
-    for i in range(num_players):
-        player_name = player_names[i]
-        player_name_lower = player_name.lower()
+# Display the summed "Skaits" for each player
+st.write("**Vārdi, kas tika ieskaitīti:**")
+for i in range(num_players):
+    player_name = player_names[i]
+    player_name_lower = player_name.lower()
 
-        # Get the rows containing the player's name with spaces around it, at the beginning, or as the only name (treat NaN as False)
-        player_rows = df[df["Vardi"].str.lower().str.contains(rf" {player_name_lower} |^{player_name_lower} |^{player_name_lower}$", na=False)]  
+    # Get the rows containing the player's name with spaces around it, at the beginning, or as the only name (treat NaN as False)
+    player_rows = df[df["Vardi"].str.lower().str.contains(rf" {player_name_lower} |^{player_name_lower} |^{player_name_lower}$", na=False)]  
 
-        # Sum the "Skaits" column for the selected rows
-        total_skaits = player_rows["Skaits"].sum()
+    # Sum the "Skaits" column for the selected rows
+    total_skaits = player_rows["Skaits"].sum()
 
-        # Display the player's name and the summed "Skaits"
-        st.write(f"**Spēlētājs {i+1}: {player_name} - Kopā: {total_skaits}**") 
-        
-        # Display the rows that were counted for each player
-        st.write(player_rows[["Vardi", "Skaits"]])  # Display only "Vardi" and "Skaits" columns
+    # Display the player's name and the summed "Skaits"
+    st.write(f"**Spēlētājs {i+1}: {player_name} - Kopā: {total_skaits}**") 
+    
+    # Display the rows that were counted for each player without the index
+    st.table(player_rows[["Vardi", "Skaits"]].reset_index(drop=True))  # Hide the index
+
 
 # --- Game logic ---
 

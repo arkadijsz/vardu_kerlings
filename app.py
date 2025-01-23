@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from tabulate import tabulate  # Import the tabulate function
+
 
 st.set_page_config(
     page_title="Vārdu Kērlings",  # Set the page title here
@@ -132,7 +132,7 @@ def display_results(initial_name, player_names, player_scores, winner_index):
         st.write(f"**Spēlētājs {i+1}: {player_name} - Kopā: {total_skaits}**") 
         
         # Display the rows that were counted for each player (without the index)
-        st.write(tabulate(player_rows[["Vardi", "Skaits"]], headers="keys", tablefmt="pipe", showindex=False))  # Use tabulate to format the table
+        st.write(player_rows[["Vardi", "Skaits"]].to_markdown(index=False, numalign="left", stralign="left"))  # Hide the index
 
 # --- Game logic ---
 

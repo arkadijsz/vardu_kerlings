@@ -46,7 +46,10 @@ def calculate_popularity_scores(names):
 
     # Get the popularity score for the initial name (convert to lowercase)
     initial_name_lower = initial_name.lower()
-    initial_name_popularity = df["Vardi"].str.lower().str.contains(rf"\b{initial_name_lower}\b").sum()
+    
+    # Count the sum of "Skaits" for the initial name (treat NaN as False)
+    initial_name_rows = df[df["Vardi"].str.lower().str.contains(rf" {initial_name_lower} |^{initial_name_lower} |^{initial_name_lower}$", na=False)]
+    initial_name_popularity = initial_name_rows["Skaits"].sum()  # Sum the "Skaits" column
 
     # If the initial name is not found, disqualify everyone
     if initial_name_popularity == 0:
@@ -57,8 +60,9 @@ def calculate_popularity_scores(names):
     for player_name in names:
         player_name_lower = player_name.lower()
         
-        # Count occurrences of the name as a whole word (including second names)
-        player_popularity = df["Vardi"].str.lower().str.contains(rf"\b{player_name_lower}\b").sum()
+        # Count the sum of "Skaits" for the player name (treat NaN as False)
+        player_rows = df[df["Vardi"].str.lower().str.contains(rf" {player_name_lower} |^{player_name_lower} |^{player_name_lower}$", na=False)]  
+        player_popularity = player_rows["Skaits"].sum()  # Sum the "Skaits" column
 
         if player_popularity == 0:
             player_score = float('inf')  # Assign infinity if disqualified
@@ -75,7 +79,8 @@ def calculate_popularity_scores(names):
 def display_results(initial_name, player_names, player_scores, winner_index):
     # Get the popularity score for the initial name
     initial_name_lower = initial_name.lower()
-    initial_name_popularity = df["Vardi"].str.lower().str.contains(rf"\b{initial_name_lower}\b").sum()
+    initial_name_rows = df[df["Vardi"].str.lower().str.contains(rf" {initial_name_lower} |^{initial_name_lower} |^{initial_name_lower}$", na=False)]
+    initial_name_popularity = initial_name_rows["Skaits"].sum()  # Sum the "Skaits" column
 
     # Display the initial name and its popularity
     st.write(f"Sākotnējais vārds: {initial_name}, Popularitāte: {initial_name_popularity}")  
@@ -89,11 +94,11 @@ def display_results(initial_name, player_names, player_scores, winner_index):
     all_disqualified = True  # Flag to track if all players are disqualified
     for i in range(num_players):
         player_name = player_names[i]
-        player_score = player_scores[i]
         player_name_lower = player_name.lower()
         
-        # Count occurrences of the name as a whole word (including second names)
-        player_popularity = df["Vardi"].str.lower().str.contains(rf"\b{player_name_lower}\b").sum()
+        # Count occurrences of the name with spaces around it, at the beginning, or as the only name (treat NaN as False)
+        player_rows = df[df["Vardi"].str.lower().str.contains(rf" {player_name_lower} |^{player_name_lower} |^{player_name_lower}$", na=False)]  
+        player_popularity = player_rows["Skaits"].sum()  # Sum the "Skaits" column
         
         net_difference = player_popularity - initial_name_popularity 
 
@@ -101,6 +106,7 @@ def display_results(initial_name, player_names, player_scores, winner_index):
             st.write(f"Spēlētājs {i+1}: {player_name} - Diskvalificēts (vārds nav atrasts)") 
         else:
             all_disqualified = False  # At least one player is not disqualified
+            # Display the results using player_popularity
             st.write(f"Spēlētājs {i+1}: {player_name}, Popularitāte: {player_popularity}, Starpība: {net_difference}")  
 
     # Display the winner or "No winner" message
@@ -110,19 +116,23 @@ def display_results(initial_name, player_names, player_scores, winner_index):
         winner_name = player_names[winner_index]  # Corrected line position
         st.write(f"Uzvarētājs: {winner_name}") 
 
-    # Display the rows that were counted for each player
+    # Display the summed "Skaits" for each player
     st.write("**Vārdi, kas tika ieskaitīti:**")
     for i in range(num_players):
         player_name = player_names[i]
         player_name_lower = player_name.lower()
 
-        # Get the rows containing the player's name (using list comprehension)
-        player_rows = df[[player_name_lower in name.lower() for name in df["Vardi"]]]
+        # Get the rows containing the player's name with spaces around it, at the beginning, or as the only name (treat NaN as False)
+        player_rows = df[df["Vardi"].str.lower().str.contains(rf" {player_name_lower} |^{player_name_lower} |^{player_name_lower}$", na=False)]  
 
-        # Display the player's name and the counted rows
-        st.write(f"**Spēlētājs {i+1}: {player_name}**")
-        st.write(player_rows)
+        # Sum the "Skaits" column for the selected rows
+        total_skaits = player_rows["Skaits"].sum()
 
+        # Display the player's name and the summed "Skaits"
+        st.write(f"**Spēlētājs {i+1}: {player_name} - Kopā: {total_skaits}**") 
+        
+        # Display the rows that were counted for each player
+        st.write(player_rows[["Vardi", "Skaits"]])  # Display only "Vardi" and "Skaits" columns
 
 # --- Game logic ---
 

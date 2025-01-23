@@ -1,6 +1,11 @@
 import streamlit as st
 import pandas as pd
 
+st.set_page_config(
+    page_title="Vārdu Kērlings",  # Set the page title here
+    page_icon=":crown:",  # You can also set an icon
+)
+
 # Load the CSV data with UTF-8 encoding
 df = pd.read_csv("names.csv", encoding="utf-8")
 

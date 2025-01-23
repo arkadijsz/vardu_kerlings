@@ -4,7 +4,7 @@ import pandas as pd
 # Load the CSV data with UTF-8 encoding
 df = pd.read_csv("names.csv", encoding="utf-8")
 
-st.title("Vārdu Kērlings Spēle") 
+st.title("Vārdu Kērlings") 
 st.subheader("Dati uz 2024.07.01") 
 
 # Get the initial name

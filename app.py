@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from tabulate import tabulate  # Import the tabulate function
 
 st.set_page_config(
     page_title="Vārdu Kērlings",  # Set the page title here
@@ -106,7 +107,6 @@ def display_results(initial_name, player_names, player_scores, winner_index):
             st.write(f"Spēlētājs {i+1}: {player_name} - Diskvalificēts (vārds nav atrasts)") 
         else:
             all_disqualified = False  # At least one player is not disqualified
-            # Display the results using player_popularity
             st.write(f"Spēlētājs {i+1}: {player_name}, Popularitāte: {player_popularity}, Starpība: {net_difference}")  
 
     # Display the winner or "No winner" message
@@ -131,8 +131,8 @@ def display_results(initial_name, player_names, player_scores, winner_index):
         # Display the player's name and the summed "Skaits"
         st.write(f"**Spēlētājs {i+1}: {player_name} - Kopā: {total_skaits}**") 
         
-        # Display the rows that were counted for each player
-        st.write(player_rows[["Vardi", "Skaits"]])  # Display only "Vardi" and "Skaits" columns
+        # Display the rows that were counted for each player (without the index)
+        st.write(tabulate(player_rows[["Vardi", "Skaits"]], headers="keys", tablefmt="pipe", showindex=False))  # Use tabulate to format the table
 
 # --- Game logic ---
 

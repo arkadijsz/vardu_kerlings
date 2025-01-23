@@ -116,7 +116,7 @@ def display_results(initial_name, player_names, player_scores, winner_index):
         winner_name = player_names[winner_index]  # Corrected line position
         st.write(f"Uzvarētājs: {winner_name}") 
 
-    # Display the summed "Skaits" for each player
+# Display the summed "Skaits" for each player
     st.write("**Vārdi, kas tika ieskaitīti:**")
     for i in range(num_players):
         player_name = player_names[i]
@@ -131,8 +131,9 @@ def display_results(initial_name, player_names, player_scores, winner_index):
         # Display the player's name and the summed "Skaits"
         st.write(f"**Spēlētājs {i+1}: {player_name} - Kopā: {total_skaits}**") 
         
-        # Display the rows that were counted for each player
-        st.write(player_rows[["Vardi", "Skaits"]])  # Display only "Vardi" and "Skaits" columns
+        # Display the rows that were counted for each player without the index
+        st.write(player_rows[["Vardi", "Skaits"]].to_markdown(index=False, numalign="left", stralign="left"))  # Hide the index
+
 
 # --- Game logic ---
 

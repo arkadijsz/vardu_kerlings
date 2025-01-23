@@ -116,8 +116,8 @@ def display_results(initial_name, player_names, player_scores, winner_index):
         player_name = player_names[i]
         player_name_lower = player_name.lower()
         
-        # Get the rows containing the player's name as a whole word
-        player_rows = df[df["Vardi"].str.lower().str.contains(rf"\b{player_name_lower}\b")]
+        # CORRECTED LINE: Use the boolean Series to filter the DataFrame
+        player_rows = df[df["Vardi"].str.lower().str.contains(rf"\b{player_name_lower}\b")] 
         
         st.write(f"**Spēlētājs {i+1}: {player_name}**")
         st.write(player_rows)

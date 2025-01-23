@@ -4,21 +4,21 @@ import pandas as pd
 # Load the CSV data with UTF-8 encoding
 df = pd.read_csv("names.csv", encoding="utf-8")
 
-st.title("Vārdu Kērlings Spēle")  # Translated title
-st.subheader("Dati par 2024.07.01")  # Translated subheader
+st.title("Vārdu Kērlings Spēle") 
+st.subheader("Dati uz 2024.07.01") 
 
 # Get the initial name
-initial_name = st.text_input("Ievadiet sākotnējo vārdu:")  # Translated prompt
+initial_name = st.text_input("Ievadiet sākotnējo vārdu:") 
 
 # Get the number of players
-num_players = st.number_input("Spēlētāju skaits:", min_value=2, step=1)  # Translated prompt
+num_players = st.number_input("Spēlētāju skaits:", min_value=2, step=1) 
 
 # --- Function definitions ---
 
 def calculate_popularity_scores(names):
     # Check if the "Vardi" column exists
     if "Vardi" not in df.columns:
-        raise ValueError("Kolonna 'Vardi' nav atrasta CSV failā.")  # Translated error message
+        raise ValueError("Kolonna 'Vardi' nav atrasta CSV failā.") 
 
     # Get the popularity score for the initial name (convert to lowercase)
     initial_name_lower = initial_name.lower()
@@ -55,11 +55,11 @@ def display_results(initial_name, player_names, player_scores, winner_index):
     initial_name_popularity = initial_name_popularity_array[0] if len(initial_name_popularity_array) > 0 else 0
 
     # Display the initial name and its popularity
-    st.write(f"Sākotnējais vārds: {initial_name}, Popularitāte: {initial_name_popularity}")  # Translated text
+    st.write(f"Sākotnējais vārds: {initial_name}, Popularitāte: {initial_name_popularity}")  
 
     # If the initial name is not found, disqualify everyone
     if initial_name_popularity == 0:
-        st.write("Nav uzvarētāja - sākotnējais vārds netika atrasts!")  # Translated text
+        st.write("Nav uzvarētāja - sākotnējais vārds netika atrasts!")  
         return  # Exit the function early
 
     # Display the player names, their popularity scores, and how far off they were
@@ -74,32 +74,31 @@ def display_results(initial_name, player_names, player_scores, winner_index):
         net_difference = player_popularity - initial_name_popularity 
 
         if player_popularity == 0:
-            st.write(f"Spēlētājs {i+1}: {player_name} - Diskvalificēts (vārds nav atrasts)")  # Translated text
+            st.write(f"Spēlētājs {i+1}: {player_name} - Diskvalificēts (vārds nav atrasts)") 
         else:
             all_disqualified = False  # At least one player is not disqualified
-            st.write(f"Spēlētājs {i+1}: {player_name}, Popularitāte: {player_popularity}, Starpība: {net_difference}")  # Translated text
+            st.write(f"Spēlētājs {i+1}: {player_name}, Popularitāte: {player_popularity}, Starpība: {net_difference}")  
 
     # Display the winner or "No winner" message
     if all_disqualified:
-        st.write("Nav uzvarētāja - visi vārdi tika diskvalificēti!")  # Translated text
-    else:
+        st.write("Nav uzvarētāja - visi vārdi tika diskvalificēti!")  
         winner_name = player_names[winner_index]
-        st.write(f"Uzvarētājs: {winner_name}")  # Translated text
+        st.write(f"Uzvarētājs: {winner_name}") 
 
 # --- Game logic ---
 
 if "game_started" not in st.session_state:
     st.session_state.game_started = False
 
-if st.button("Sākt spēli"):  # Translated button text
+if st.button("Sākt spēli"): 
     st.session_state.game_started = True
 
 if st.session_state.game_started:
     # Create input fields for each player
     for i in range(num_players):
-        st.text_input(f"Spēlētāja {i+1} vārds:", key=f"player_{i}")  # Translated prompt
+        st.text_input(f"Spēlētāja {i+1} vārds:", key=f"player_{i}") 
 
-    if st.button("Iesniegt"):  # Translated button text
+    if st.button("Iesniegt"): 
         # Get the player names from the session state
         player_names = [st.session_state[f"player_{i}"] for i in range(num_players)]
 

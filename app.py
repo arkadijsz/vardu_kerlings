@@ -9,8 +9,13 @@ st.set_page_config(
 # Load the CSV data with UTF-8 encoding
 df = pd.read_csv("names.csv", encoding="utf-8")
 
-st.title("Vārdu Kērlings") 
-st.subheader("Ballīšu spēle par to, cik labi Tu un Tavi draugi zina latviešus") 
+st.markdown(
+    """
+    <h1>Vārdu Kērlings</h1>
+    <h2>Ballīšu spēle par to, cik labi Tu un Tavi draugi zina latviešus</h2>
+    """,
+    unsafe_allow_html=True,
+)
 
 # Instructions
 st.write("""

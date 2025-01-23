@@ -14,6 +14,7 @@ st.subheader("Ballīšu spēle par to, cik labi Tu un Tavi draugi zina latviešu
 
 # Instructions
 st.write("""
+Uzvar spēlētājs, kura izvēlētā vārda popularitāte ir vistuvāk sākotnējā vārda izplatībai Latvijā.
 **Instrukcijas:**
 
 1. **Ievadiet sākotnējo vārdu.** Šis vārds kalpos kā atskaites punkts.
@@ -22,7 +23,6 @@ st.write("""
 4. **Katrs spēlētājs ievada savu vārdu.**
 5. **Nospiediet "Iesniegt", lai redzētu rezultātus.**
 
-Uzvar spēlētājs, kura izvēlētā vārda popularitāte ir vistuvāk sākotnējā vārda izplatībai Latvijā.
 """)
 
 

@@ -11,10 +11,10 @@ df = pd.read_csv("names.csv", encoding="utf-8")
 
 st.markdown(
     """
-    <h1>Vārdu Kērlings</h1>
-    <h2>Ballīšu spēle par to, cik labi Tu un Tavi draugi zina latviešus</h2>
+    # Vārdu Kērlings
+    ## Ballīšu spēle par to, cik labi Tu un Tavi draugi zina latviešus
     """,
-    unsafe_allow_html=True,
+    unsafe_allow_html=True,  # This prevents the headers from being turned into links
 )
 
 # Instructions

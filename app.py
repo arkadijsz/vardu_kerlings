@@ -12,6 +12,20 @@ df = pd.read_csv("names.csv", encoding="utf-8")
 st.title("Vārdu Kērlings") 
 st.subheader("Dati uz 2024.07.01") 
 
+# Instructions
+st.write("""
+**Instrukcijas:**
+
+1. **Ievadiet sākotnējo vārdu.** Šis vārds kalpos kā atskaites punkts.
+2. **Izvēlieties spēlētāju skaitu.**
+3. **Nospiediet "Sākt spēli".**
+4. **Katrs spēlētājs ievada savu vārdu.**
+5. **Nospiediet "Iesniegt", lai redzētu rezultātus.**
+
+Uzvar spēlētājs, kura izvēlētā vārda popularitāte ir vistuvāk sākotnējā vārda popularitātei.
+""")
+
+
 # Get the initial name
 initial_name = st.text_input("Ievadiet sākotnējo vārdu:") 
 

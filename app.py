@@ -19,8 +19,6 @@ st.markdown(
 
 # Instructions
 st.write("""
-Uzvar spēlētājs, kura izvēlētā vārda popularitāte ir vistuvāk sākotnējā vārda izplatībai Latvijā.
-         
 **Instrukcijas:**
 
 1. **Ievadiet sākotnējo vārdu.** Šis vārds kalpos kā atskaites punkts.
@@ -29,6 +27,7 @@ Uzvar spēlētājs, kura izvēlētā vārda popularitāte ir vistuvāk sākotnē
 4. **Katrs spēlētājs ievada savu vārdu.**
 5. **Nospiediet "Iesniegt", lai redzētu rezultātus.**
 
+Uzvar spēlētājs, kura izvēlētā vārda popularitāte ir vistuvāk sākotnējā vārda izplatībai Latvijā.
 """)
 
 
@@ -47,8 +46,7 @@ def calculate_popularity_scores(names):
 
     # Get the popularity score for the initial name (convert to lowercase)
     initial_name_lower = initial_name.lower()
-    initial_name_popularity_array = df[df["Vardi"].str.lower() == initial_name_lower]["Skaits"].values
-    initial_name_popularity = initial_name_popularity_array[0] if len(initial_name_popularity_array) > 0 else 0
+    initial_name_popularity = df["Vardi"].str.lower().str.contains(rf"\b{initial_name_lower}\b").sum()
 
     # If the initial name is not found, disqualify everyone
     if initial_name_popularity == 0:
@@ -58,8 +56,9 @@ def calculate_popularity_scores(names):
     player_scores = []
     for player_name in names:
         player_name_lower = player_name.lower()
-        player_popularity_array = df[df["Vardi"].str.lower() == player_name_lower]["Skaits"].values
-        player_popularity = player_popularity_array[0] if len(player_popularity_array) > 0 else 0
+        
+        # Count occurrences of the name as a whole word (including second names)
+        player_popularity = df["Vardi"].str.lower().str.contains(rf"\b{player_name_lower}\b").sum()
 
         if player_popularity == 0:
             player_score = float('inf')  # Assign infinity if disqualified
@@ -76,8 +75,7 @@ def calculate_popularity_scores(names):
 def display_results(initial_name, player_names, player_scores, winner_index):
     # Get the popularity score for the initial name
     initial_name_lower = initial_name.lower()
-    initial_name_popularity_array = df[df["Vardi"].str.lower() == initial_name_lower]["Skaits"].values
-    initial_name_popularity = initial_name_popularity_array[0] if len(initial_name_popularity_array) > 0 else 0
+    initial_name_popularity = df["Vardi"].str.lower().str.contains(rf"\b{initial_name_lower}\b").sum()
 
     # Display the initial name and its popularity
     st.write(f"Sākotnējais vārds: {initial_name}, Popularitāte: {initial_name_popularity}")  
@@ -93,8 +91,9 @@ def display_results(initial_name, player_names, player_scores, winner_index):
         player_name = player_names[i]
         player_score = player_scores[i]
         player_name_lower = player_name.lower()
-        player_popularity_array = df[df["Vardi"].str.lower() == player_name_lower]["Skaits"].values
-        player_popularity = player_popularity_array[0] if len(player_popularity_array) > 0 else 0
+        
+        # Count occurrences of the name as a whole word (including second names)
+        player_popularity = df["Vardi"].str.lower().str.contains(rf"\b{player_name_lower}\b").sum()
         
         net_difference = player_popularity - initial_name_popularity 
 
@@ -110,6 +109,18 @@ def display_results(initial_name, player_names, player_scores, winner_index):
     else:
         winner_name = player_names[winner_index]  # Corrected line position
         st.write(f"Uzvarētājs: {winner_name}") 
+
+    # Display the rows that were counted for each player
+    st.write("**Vārdi, kas tika ieskaitīti:**")
+    for i in range(num_players):
+        player_name = player_names[i]
+        player_name_lower = player_name.lower()
+        
+        # Get the rows containing the player's name as a whole word
+        player_rows = df[df["Vardi"].str.lower().str.contains(rf"\b{player_name_lower}\b")]
+        
+        st.write(f"**Spēlētājs {i+1}: {player_name}**")
+        st.write(player_rows)
 
 # --- Game logic ---
 

@@ -10,14 +10,11 @@ st.set_page_config(
 df = pd.read_csv("names.csv", encoding="utf-8")
 
 st.title("Vārdu Kērlings") 
-st.subheader("Ballīšu Spēle par to, Cik labi Tu un Tavi draugi zina Latviešus") 
+st.subheader("Ballīšu spēle par to, cik labi Tu un Tavi draugi zina latviešus") 
 
 # Instructions
 st.write("""
-**
-Uzvar spēlētājs, kura izvēlētā vārda popularitāte ir vistuvāk sākotnējā vārda izplatībai Latvijā.         
-
-Instrukcijas:**
+**Instrukcijas:**
 
 1. **Ievadiet sākotnējo vārdu.** Šis vārds kalpos kā atskaites punkts.
 2. **Izvēlieties spēlētāju skaitu.**
@@ -25,7 +22,7 @@ Instrukcijas:**
 4. **Katrs spēlētājs ievada savu vārdu.**
 5. **Nospiediet "Iesniegt", lai redzētu rezultātus.**
 
-
+Uzvar spēlētājs, kura izvēlētā vārda popularitāte ir vistuvāk sākotnējā vārda izplatībai Latvijā.
 """)
 
 
